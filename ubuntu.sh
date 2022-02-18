@@ -10,6 +10,7 @@ setting_mirror() {
 }
 
 backup_origin_config() {
+    # 只有当配置文件存在时，备份原有配置文件
     if [ -e "${SOURCES_LIST}" ]
     then
         cp "${SOURCES_LIST}" "${SOURCES_LIST}.origin"
