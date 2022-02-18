@@ -17,5 +17,11 @@ backup_origin_config() {
     fi
 }
 
+if [[ "$(uname -v)" != *"Ubuntu"* ]]
+then 
+    echo "当前系统不是 Ubuntu，请在 Ubuntu 系统上执行该脚本。当前系统信息：$(uname -v)"
+    exit 1
+fi
+
 backup_origin_config
 setting_mirror
