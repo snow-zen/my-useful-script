@@ -6,7 +6,7 @@ SOURCES_LIST="/etc/apt/sources.list"
 
 setting_mirror() {
     # 复制远程自定义 Ubuntu 软件源镜像配置并设置
-    curl "https://raw.githubusercontents.com/snow-zen/my-custom-config/master/ubuntu/sources.list" -o "${SOURCES_LIST}"
+    curl "https://raw.githubusercontents.com/snow-zen/my-custom-config/master/ubuntu/sources.list" --create-dirs -o "${SOURCES_LIST}"
 }
 
 backup_origin_config() {
