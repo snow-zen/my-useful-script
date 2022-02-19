@@ -16,8 +16,7 @@ add_docker_repo() {
     # 添加 Docker-CE 软件库
     add_docker_repo_gpg_key
 
-    sudo add-apt-repository \ 
-        "deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+    sudo add-apt-repository "deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
 }
 
 install_docker_ce() {
