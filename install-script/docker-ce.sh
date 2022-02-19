@@ -4,7 +4,7 @@
 
 remove_old_docker() {
     # 删除旧版本 Docker
-    sudo apt-get remove docker docker-engine docker.io     fi
+    sudo apt-get remove docker docker-engine docker.io
 }
 
 add_docker_repo_gpg_key() {
