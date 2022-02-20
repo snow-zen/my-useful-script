@@ -19,7 +19,7 @@ backup_origin_config() {
 
 if ! sh ./lib/check-os.sh "Ubuntu"
 then 
-    echo "脚本不支持当前系统，请在 Ubuntu 系统上执行该脚本。\n当前系统信息：$(uname -v)" >&2
+    printf "脚本不支持当前系统，请在 Ubuntu 系统上执行该脚本。\n当前系统信息：%s" "$(uname -v)" >&2
     exit 1
 fi
 
