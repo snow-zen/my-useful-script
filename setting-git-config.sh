@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # @description 设置 git 配置信息
+# author snow-zen
 
 set_username_and_email() {
   read -p "请输入用户名称（user.name）：" -r username
