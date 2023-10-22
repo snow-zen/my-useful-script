@@ -12,3 +12,11 @@
 + `ls-jar`：列出指定 jar 包内所有文件。
 + `set-host`：设置本地 host 解析规则。
 + `set-mirror`：设置指定软件的镜像地址。
+
+## 安装脚本
+
+```shell
+git clone https://github.com/snow-zen/my-useful-script.git
+cd my-useful-script
+./install ~/.bash_profile
+```
