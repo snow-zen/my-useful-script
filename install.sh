@@ -18,7 +18,6 @@ case $PATH in
   fi
 
   echo "export PATH=\$PATH:$SCRIPT_PATH" | tee -a "$PROFILE_PATH" >/dev/null
-  # shellcheck source=$HOME/.profile
-  source "$PROFILE_PATH"
+  echo "Please use the following command to make the changes effective: source $PROFILE_PATH"
   ;;
 esac
