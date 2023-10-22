@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Setting npm mirror address.
+
+NPM_REGISTRY_URL="https://registry.npmmirror.com"
+
+if ! command -v npm >/dev/null 2>&1; then
+  echo "Command not found: npm" >&2 && exit 1
+fi
+
+npm config set registry "${NPM_REGISTRY_URL}"
+echo "Successfully set npm mirror address: ${NPM_REGISTRY_URL}"
+echo "Please use the following command to view the settings: npm config list"

@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+usage() {
+  cat <<EOF
+Usage: ${PROG} [options] [name ...]
+Install the specified software.
+
+Support software name:
+  docker
+
+Example:
+  ${PROG} docker
+
+Options:
+  -h, --help            display this help and exit
+EOF
+}
+
+PROG="$(basename "$0")"
+readonly PROG
+
+if [ "$#" -eq 0 ]; then
+  usage >&2 && exit 1
+fi
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+  -h | --help)
+    usage && exit 0
+    ;;
+  -*)
+    echo "Unrecognized option '$1'." >&2
+    usage >&2 && exit 1
+    ;;
+  docker)
+    sh ../lib/docker/install-docker-ce
+    shift
+    ;;
+  *)
+    echo "The name is not within the range: $1." >&2 && exit 1
+    ;;
+  esac
+done

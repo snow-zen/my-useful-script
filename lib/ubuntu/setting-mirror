@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Setting ubuntu mirror address. if the configuration file already exists, back it up.
+
+SOURCES_LIST="/etc/apt/sources.list"
+
+setting_mirror() {
+  # Copy remote custom Ubuntu software source mirror configuration and settings
+  curl "https://raw.githubusercontents.com/snow-zen/my-custom-config/master/ubuntu/sources.list" --create-dirs -o "${SOURCES_LIST}"
+}
+
+backup_origin_config() {
+  # Only when the configuration file exists, backup the original configuration file
+  if [ -e "${SOURCES_LIST}" ]; then
+    cp "${SOURCES_LIST}" "${SOURCES_LIST}.origin"
+  fi
+}
+
+if ! [[ "$(uname -v)" == *"Ubuntu"* ]]; then
+  echo "The script does not support the current system. please execute the script on the Ubuntu system." >&2
+  echo "Current system message: $(uname -v)" >&2
+  exit 1
+fi
+
+backup_origin_config
+setting_mirror

@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+usage() {
+  cat <<EOF
+Usage: ${PROG} [options] [path ...]
+List the file directories in the specified jar package.
+
+Example:
+  ${PROG} ~/example.jar
+
+Options:
+  -h, --help            display this help and exit
+EOF
+}
+
+list_jar() {
+  if ! [ -e "$1" ]; then
+    echo "Specified path is not exist: $1" >&2 && exit 1
+  fi
+  jar -tf "$1"
+}
+
+PROG="$(basename "$0")"
+readonly PROG
+
+if ! command -v jar >/dev/null 2>&1; then
+  echo "Command not found: jar" >&2 && exit 1
+fi
+
+if [ "$#" -eq 0 ]; then
+  usage >&2 && exit 1
+fi
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+  -h | --help)
+    usage && exit 0
+    ;;
+  -*)
+    echo "Unrecognized option '$1'" >&2
+    usage >&2 && exit 1
+    ;;
+  *)
+    list_jar "$1"
+    shift
+    ;;
+  esac
+done

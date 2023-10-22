@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Replace Docker-CE image library address.
+
+CONFIG_FILE_PATH="/etc/docker/daemon.json"
+
+fetch_config() {
+  # Fetch the daemon.json configuration file
+  sudo curl "https://raw.githubusercontents.com/snow-zen/my-custom-config/master/docker/daemon.json" \
+    --create-dirs \
+    -o ${CONFIG_FILE_PATH}
+}
+
+load_config() {
+  # Load the daemon.json configuration file
+  sudo systemctl daemon-reload
+  sudo systemctl restart docker
+}
+
+fetch_config
+load_config

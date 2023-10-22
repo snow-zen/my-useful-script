@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+usage() {
+  cat <<EOF
+Usage: ${PROG} [options]
+A boot script for setting git config.
+
+Example:
+  ${PROG}
+
+Options:
+  -h, --help            display this help and exit
+EOF
+}
+
+set_username_and_email() {
+  read -p "user.name: " -r username
+  git config "$GLOBAL_OPTION" user.name "$username" && echo "Successfully set user.name"
+
+  read -p "user.email: " -r email
+  git config "$GLOBAL_OPTION" user.email "$email" && echo "Successfully set user.email"
+}
+
+parse_chinese_path() {
+  git config "$GLOBAL_OPTION" core.quotepath false && echo "Successfully set core.quotepath"
+}
+
+PROG="$(basename "$0")"
+readonly PROG
+
+if [ "$#" -gt 0 ]; then
+  case "$1" in
+  -h | --help)
+    usage && exit 0
+    ;;
+  -*)
+    echo "Unrecognized option '$1'." >&2
+    usage >&2 && exit 1
+    ;;
+  *)
+    echo "Unexpect value '$1'" >&2
+    usage >&2 && exit 1
+    ;;
+  esac
+fi
+
+GLOBAL_OPTION=
+while read -p "Start setting username and email. Is it global? [Y/N]" -r GLOBAL_FLAG; do
+  case $GLOBAL_FLAG in
+  [Yy])
+    GLOBAL_OPTION="--global"
+    ;;
+  [Nn])
+    # do nothing
+    ;;
+  *)
+    echo "Unresolved value: ${GLOBAL_FLAG}, please try again." >&2
+    continue
+    ;;
+  esac
+
+  set_username_and_email
+  parse_chinese_path
+  break
+done
+
+echo "Completed, please use the following command to view the settings: "
+if [ -z "$GLOBAL_OPTION" ]; then
+  echo "git config --list"
+else
+  echo "git config $GLOBAL_OPTION --list"
+fi
