@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Docker-CE installation script.
+set -euo pipefail
 
 remove_old_docker() {
   # Delete old version docker

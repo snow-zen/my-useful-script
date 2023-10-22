@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Setting ubuntu mirror address. if the configuration file already exists, back it up.
+set -euo pipefail
 
 SOURCES_LIST="/etc/apt/sources.list"
 

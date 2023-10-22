@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Replace Docker-CE image library address.
+set -euo pipefail
 
 CONFIG_FILE_PATH="/etc/docker/daemon.json"
 

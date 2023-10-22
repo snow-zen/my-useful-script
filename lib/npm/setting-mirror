@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Setting npm mirror address.
+set -euo pipefail
 
 NPM_REGISTRY_URL="https://registry.npmmirror.com"
 

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Setting pypi mirror address.
+set -euo pipefail
 
 MIRROR_URI="https://pypi.tuna.tsinghua.edu.cn/simple"
 
