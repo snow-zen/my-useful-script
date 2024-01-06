@@ -12,6 +12,7 @@
 + `ls-jar`：列出指定 jar 包内所有文件。
 + `set-host`：设置本地 host 解析规则。
 + `set-mirror`：设置指定软件的镜像地址。
++ `wsl-http-proxy`: （未验证）为 wsl2 设置 HTTP 代理。
 
 ## 安装脚本
 

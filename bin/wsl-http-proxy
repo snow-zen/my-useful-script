@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# wsl2 set http network proxy
+set -euo pipefail
+
+usage() {
+  cat <<EOF
+Usage: ${PROG} [options] [config_file] [proxy_address]
+wsl2 set http network proxy
+
+Example:
+  ${PROG} /etc/profile http://example.com:7890
+
+Options:
+  -h, --help            display this help and exit
+EOF
+}
+
+valid_host() {
+  local http_re="https?:\/\/.*"
+  if [[ $1 =~ $http_re ]]; then
+    return
+  fi
+  echo "The host is not valid: $1." >&2
+  exit 1
+}
+
+setting_wsl_http_proxy() {
+  if [ $# -ne 2 ]; then
+    echo "Please provide the missing argument: $*." >&2
+    exit 1
+  fi
+  valid_host "$2"
+
+  local http_proxy_record="export http_proxy=${2}"
+  local https_proxy_record="export https_proxy=${2}"
+
+  echo "$http_proxy_record" | sudo tee -a "$1" >/dev/null
+  echo "$https_proxy_record" | sudo tee -a "$1" >/dev/null
+
+  echo "Http proxy settings successful."
+  echo "Please use the following command to make the changes effective: source $1"
+  echo "To ensure the normal operation of the agent, please check if the CFW program on the Windows system has \"Allow LAN\" enabled."
+}
+
+PROG="$(basename "$0")"
+readonly PROG
+
+if [ "$#" -eq 0 ]; then
+  usage >&2 && exit 1
+fi
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+  -h | --help)
+    usage && exit 0
+    ;;
+  -*)
+    echo "Unrecognized option '$1'" >&2
+    usage >&2 && exit 1
+    ;;
+  *)
+    if [ -e "$1" ]; then
+      touch "$1"
+    fi
+    setting_wsl_http_proxy "$1" "$2"
+    shift 2
+    ;;
+  esac
+done
