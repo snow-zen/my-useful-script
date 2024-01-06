@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Docker-CE installation script.
+# Docker-CE and Docker compose installation script.
 set -euo pipefail
 
 remove_old_docker() {
@@ -26,6 +26,25 @@ install_docker_ce() {
   sudo apt-get install docker-ce
 }
 
+install_docker_compose() {
+  while read -p "Do you need to install Docker Compose? [Y/N]" -r install_flag; do
+    case $install_flag in
+    [Yy])
+      sudo apt-get install docker-compose-plugin
+      ;;
+    [Nn])
+      # do nothing
+      ;;
+    *)
+      echo "Unresolved value: ${GLOBAL_FLAG}, please try again." >&2
+      continue
+      ;;
+    esac
+    break
+  done
+}
+
 remove_old_docker
 add_docker_repo
 install_docker_ce
+install_docker_compose
