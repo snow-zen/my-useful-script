@@ -36,7 +36,7 @@ install_docker_compose() {
       # do nothing
       ;;
     *)
-      echo "Unresolved value: ${GLOBAL_FLAG}, please try again." >&2
+      echo "Unresolved value: ${install_flag}, please try again." >&2
       continue
       ;;
     esac
