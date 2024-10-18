@@ -17,9 +17,15 @@ backup_origin_config() {
   fi
 }
 
-if ! [[ "$(uname -v)" == *"Ubuntu"* ]]; then
+if [ ! -f /etc/os-release ]; then
+  echo "The /etc/os-release file is not found." >&2
+  exit 1
+fi
+
+CURRENT_SYSTEM=$(awk -F= '/^ID=/{print $2}' /etc/os-release)
+if [ "${CURRENT_SYSTEM}" != "ubuntu" ]; then
   echo "The script does not support the current system. please execute the script on the Ubuntu system." >&2
-  echo "Current system message: $(uname -v)" >&2
+  echo "Current system message: ${CURRENT_SYSTEM}" >&2
   exit 1
 fi
 
