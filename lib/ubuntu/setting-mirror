@@ -7,7 +7,7 @@ SOURCES_LIST="/etc/apt/sources.list"
 
 setting_mirror() {
   # Copy remote custom Ubuntu software source mirror configuration and settings
-  curl "https://raw.githubusercontents.com/snow-zen/my-custom-config/master/ubuntu/sources.list" --create-dirs -o "${SOURCES_LIST}"
+  curl "https://raw.githubusercontent.com/snow-zen/my-custom-config/master/ubuntu/sources.list" --create-dirs -o "${SOURCES_LIST}"
 }
 
 backup_origin_config() {

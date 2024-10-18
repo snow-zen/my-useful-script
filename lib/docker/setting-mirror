@@ -7,7 +7,7 @@ CONFIG_FILE_PATH="/etc/docker/daemon.json"
 
 fetch_config() {
   # Fetch the daemon.json configuration file
-  sudo curl "https://raw.githubusercontents.com/snow-zen/my-custom-config/master/docker/daemon.json" \
+  sudo curl "https://raw.githubusercontent.com/snow-zen/my-custom-config/master/docker/daemon.json" \
     --create-dirs \
     -o ${CONFIG_FILE_PATH}
 }
