@@ -19,5 +19,5 @@
 ```shell
 git clone https://github.com/snow-zen/my-useful-script.git
 cd my-useful-script
-./install ~/.bash_profile
+./install.sh ~/.bash_profile
 ```
