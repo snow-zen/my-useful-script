@@ -5,46 +5,31 @@ set -euo pipefail
 
 remove_old_docker() {
   # Delete old version docker
-  sudo apt-get remove docker docker-engine docker.io
-}
-
-add_docker_repo_gpg_key() {
-  # Trust Docker's GPG public key
-  curl -fsSL "https://download.docker.com/linux/ubuntu/gpg" | sudo apt-key add -
+  for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc
+    do sudo apt-get remove $pkg >/dev/null 2>&1 || true
+  done
 }
 
 add_docker_repo() {
-  # Add Docker-CE software library
-  add_docker_repo_gpg_key
-  sudo add-apt-repository "deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+  # Add Docker's official GPG key:
+  sudo apt-get update
+  sudo apt-get install ca-certificates curl
+  sudo install -m 0755 -d /etc/apt/keyrings
+  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+  # Add the repository to Apt sources:
+  echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  sudo apt-get update
 }
 
 install_docker_ce() {
-  sudo apt-get update
-  # Install dependencies
-  sudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common
-  sudo apt-get install docker-ce
-}
-
-install_docker_compose() {
-  while read -p "Do you need to install Docker Compose? [Y/N]" -r install_flag; do
-    case $install_flag in
-    [Yy])
-      sudo apt-get install docker-compose-plugin
-      ;;
-    [Nn])
-      # do nothing
-      ;;
-    *)
-      echo "Unresolved value: ${install_flag}, please try again." >&2
-      continue
-      ;;
-    esac
-    break
-  done
+  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 }
 
 remove_old_docker
 add_docker_repo
 install_docker_ce
-install_docker_compose
