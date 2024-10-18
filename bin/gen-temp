@@ -9,33 +9,33 @@ import time
 
 
 def get_args():
-  """Define and parse command args"""
-  parser = argparse.ArgumentParser(
-    description="Generate a temp filename")
-  parser.add_argument("-s", "--suffix", dest="suffix", type=str,
-                      help="Append a suffix string")
-  parser.add_argument("-p", "--prefix", dest="prefix", type=str,
-                      help="Insert a prefix string")
-  parser.add_argument("-e", "--extension", dest="extension", type=str,
-                      help="Assign a file extension string")
-  return parser.parse_args()
+    """Define and parse command args"""
+    parser = argparse.ArgumentParser(
+        description="Generate a temp filename")
+    parser.add_argument("-s", "--suffix", dest="suffix", type=str,
+                        help="Append a suffix string")
+    parser.add_argument("-p", "--prefix", dest="prefix", type=str,
+                        help="Insert a prefix string")
+    parser.add_argument("-e", "--extension", dest="extension", type=str,
+                        help="Assign a file extension string")
+    return parser.parse_args()
 
 
 if __name__ == '__main__':
-  args = get_args()
-  prefix_part: str = args.prefix
-  random_part: str = str(calendar.timegm(time.gmtime()))
-  suffix_part: str = args.suffix
-  extension_part: str = args.extension
-  filename: str = ""
+    args = get_args()
+    prefix_part: str = args.prefix
+    random_part: str = str(calendar.timegm(time.gmtime()))
+    suffix_part: str = args.suffix
+    extension_part: str = args.extension
+    filename: str = ""
 
-  if prefix_part is not None:
-    filename += prefix_part
-  filename += random_part
-  if suffix_part is not None:
-    filename += suffix_part
-  if extension_part is not None:
-    if not extension_part.startswith("."):
-      filename += "."
-    filename += extension_part
-  print(filename)
+    if prefix_part is not None:
+        filename += prefix_part
+    filename += random_part
+    if suffix_part is not None:
+        filename += suffix_part
+    if extension_part is not None:
+        if not extension_part.startswith("."):
+            filename += "."
+        filename += extension_part
+    print(filename)
